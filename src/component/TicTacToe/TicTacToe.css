@@ -1,0 +1,70 @@
+/* Board, squares and marks. Layout, scoreboard and buttons live in App.css. */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: min(92vw, 420px);
+}
+
+.cell {
+  aspect-ratio: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, opacity 0.2s, border-color 0.2s;
+}
+
+.cell:not(:disabled):hover {
+  background: var(--panel-hover);
+  transform: scale(1.03);
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+.cell:focus-visible {
+  outline: 3px solid var(--x);
+  outline-offset: 2px;
+}
+
+.cell.dim {
+  opacity: 0.45;
+}
+
+.cell.win {
+  background: var(--panel-hover);
+  animation: pulse 0.9s ease-in-out 2;
+}
+
+.cell.win-x { border-color: var(--x); }
+.cell.win-o { border-color: var(--o); }
+
+.mark {
+  width: 62%;
+  height: auto;
+  aspect-ratio: 1;
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+  animation: pop 0.22s ease-out;
+}
+
+.mark-x { stroke: var(--x); }
+.mark-o { stroke: var(--o); }
+
+@keyframes pulse {
+  50% { transform: scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark, .cell.win { animation: none; }
+  .cell { transition: none; }
+}

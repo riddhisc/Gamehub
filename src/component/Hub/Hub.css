@@ -1,0 +1,132 @@
+.hub {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 16px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hub-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.hub-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 9vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.hub-title span {
+  color: var(--x);
+}
+
+.hub-sub {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+  padding: 20px;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.game-card:hover {
+  background: var(--panel-hover);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.game-card:active {
+  transform: scale(0.98);
+}
+
+.game-card:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+
+.card-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.card-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.card-meta {
+  margin-top: 8px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .hub { padding-top: 28px; gap: 24px; }
+  .hub-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .game-card { padding: 16px; }
+  .card-desc { font-size: 0.88rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-card { transition: none; }
+  .game-card:hover { transform: none; }
+}
+
+.game-card.featured {
+  grid-column: 1 / -1;
+  position: relative;
+  padding: 26px 24px;
+  background: linear-gradient(135deg, #3b1d6e 0%, #1c0f3d 55%, #5a2a0c 130%);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 10px 34px rgba(255, 178, 63, 0.22);
+}
+.game-card.featured .card-name { font-size: 1.7rem; }
+.game-card.featured .card-desc { font-size: 1rem; }
+.card-badge {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #2a1400;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

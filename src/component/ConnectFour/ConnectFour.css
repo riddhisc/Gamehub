@@ -1,0 +1,63 @@
+.c4-board {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  width: min(92vw, 440px);
+  padding: 10px;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.column:disabled {
+  cursor: default;
+}
+
+.column:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.column:focus-visible {
+  outline: 3px solid var(--x);
+  outline-offset: 2px;
+}
+
+.disc {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: var(--bg);
+}
+
+.disc.p1 {
+  background: var(--x);
+  border-color: var(--x);
+  animation: pop 0.22s ease-out;
+}
+
+.disc.p2 {
+  background: var(--o);
+  border-color: var(--o);
+  animation: pop 0.22s ease-out;
+}
+
+.disc.win {
+  box-shadow: 0 0 0 3px var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disc.p1, .disc.p2 { animation: none; }
+}

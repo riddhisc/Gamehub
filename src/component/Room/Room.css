@@ -1,0 +1,119 @@
+/* slim strip inside a game while a room is active */
+.room-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 12px;
+  width: min(92vw, 560px);
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  font-size: 0.9rem;
+}
+
+.room-strip.live { border-color: var(--x); }
+.room-strip.error { border-color: var(--o); border-radius: 16px; }
+.room-error { color: var(--o); }
+
+.strip-code {
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--x);
+}
+
+.strip-text { color: var(--text); }
+.strip-note { flex-basis: 100%; text-align: center; color: var(--muted); font-size: 0.8rem; }
+
+.chip {
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--x); }
+.chip:focus-visible { outline: 3px solid var(--x); outline-offset: 2px; }
+
+.dot-live {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--x);
+}
+
+/* "Play together" section on the main page */
+.together {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel);
+}
+
+.together h2 { margin: 0; font-size: 1.4rem; }
+.together-sub { margin: 4px 0 0; color: var(--muted); }
+
+.together-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.together-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--bg);
+}
+
+.together-box h3 { margin: 0; font-size: 1.05rem; }
+
+.room-pick { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.room-pick-opt {
+  padding: 7px 14px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+.room-pick-opt[aria-checked="true"] { border-color: var(--x); color: var(--x); }
+.room-pick-opt:focus-visible { outline: 3px solid var(--x); outline-offset: 2px; }
+
+.join-form { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.room-input {
+  width: 8em;
+  padding: 10px 12px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.room-input:focus-visible { outline: 3px solid var(--x); outline-offset: 2px; }
+
+.together-error { margin: 0; color: var(--o); font-size: 0.9rem; }
+
+@media (max-width: 640px) {
+  .together-cols { grid-template-columns: 1fr; }
+}

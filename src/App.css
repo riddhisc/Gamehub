@@ -1,0 +1,213 @@
+/* ---------- Back bar (shown above every game) ---------- */
+
+.app {
+  min-height: 100vh;
+}
+
+.topbar {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px 16px 0;
+}
+
+.back {
+  padding: 8px 16px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.back:hover {
+  background: var(--panel-hover);
+  border-color: var(--x);
+}
+
+.back:focus-visible {
+  outline: 3px solid var(--x);
+  outline-offset: 2px;
+}
+
+/* ---------- Pill buttons (used by the picture picker) ---------- */
+
+.tab {
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background: var(--panel);
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab[aria-selected="true"] {
+  background: transparent;
+  border-color: var(--x);
+  color: var(--x);
+}
+
+.tab:focus-visible {
+  outline: 3px solid var(--x);
+  outline-offset: 2px;
+}
+
+.mode-opt {
+  padding: 7px 16px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+.mode-opt[aria-checked="true"] { border-color: var(--x); color: var(--x); }
+.mode-opt:focus-visible { outline: 3px solid var(--x); outline-offset: 2px; }
+
+
+/* ---------- Shared game layout ---------- */
+
+.game {
+  padding: 20px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: var(--text);
+}
+
+.title {
+  margin: 8px 0 0;
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.title span {
+  color: var(--x);
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: min(92vw, 420px);
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 2px solid transparent;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.score-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.score-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-x .score-value { color: var(--x); }
+.score-o .score-value { color: var(--o); }
+
+.score-x.active { border-color: var(--x); transform: translateY(-2px); }
+.score-o.active { border-color: var(--o); transform: translateY(-2px); }
+
+.status {
+  margin: 0;
+  min-height: 1.6em;
+  font-size: 1.15rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.status strong {
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 2px solid var(--x);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--x);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  background: #5dffd8;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--x);
+}
+
+.btn-ghost:hover {
+  background: rgba(38, 255, 203, 0.1);
+}
+
+@keyframes pop {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* phones: tighter spacing so a whole game fits on screen */
+@media (max-width: 640px) {
+  .game { gap: 14px; padding-top: 12px; }
+  .title { font-size: 1.9rem; margin-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .score, .btn, .tab, .back { transition: none; }
+}
+
+/* ---------- Easy / Medium / Hard selector ---------- */
+.levels { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.levels-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
+.levels-label { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin-right: 2px; }
+.levels-hint { margin: 0; color: var(--muted); font-size: 0.85rem; text-align: center; }
+.mode-opt:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.vs-pick { display: flex; flex-direction: column; align-items: center; gap: 8px; }

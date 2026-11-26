@@ -1,0 +1,60 @@
+.memory-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: min(92vw, 420px);
+}
+
+.card {
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.2s, transform 0.15s;
+}
+
+.card.down:hover {
+  background: var(--panel-hover);
+  transform: scale(1.04);
+}
+
+.card.down::after {
+  content: "";
+  width: 20%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.card.up {
+  background: var(--panel-hover);
+  cursor: default;
+}
+
+.card.matched {
+  border-color: currentColor;
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--x);
+  outline-offset: 2px;
+}
+
+.shape {
+  width: 62%;
+  height: auto;
+  aspect-ratio: 1;
+  fill: currentColor;
+  animation: pop 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shape { animation: none; }
+  .card { transition: none; }
+}
