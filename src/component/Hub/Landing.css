@@ -1,0 +1,82 @@
+.landing {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #0b0b0b;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif;
+}
+
+.l-nav {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90vw, 560px);
+  padding: 12px 20px;
+  background: #000;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 5;
+}
+.l-menu {
+  width: 36px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; justify-content: center; gap: 7px;
+}
+.l-menu span { display: block; height: 3px; background: #fff; border-radius: 2px; transition: transform 0.2s; }
+.l-menu:hover span:first-child { transform: translateX(4px); }
+.l-menu:hover span:last-child { transform: translateX(-4px); }
+.l-brand { font-size: 1.35rem; letter-spacing: 0.12em; font-weight: 400; }
+.l-brand b { font-weight: 400; color: #26ffcb; }
+.l-logo { width: 26px; height: 26px; }
+
+.l-side {
+  position: absolute; top: 50%; font-size: 1.1rem; letter-spacing: 0.05em; z-index: 2;
+}
+.l-left { left: 5vw; } .l-right { right: 5vw; }
+
+.l-hero {
+  position: relative; z-index: 3; margin: 0;
+  display: flex; flex-direction: column; align-items: center;
+  font-weight: 400; text-transform: uppercase; text-align: center;
+  font-size: clamp(3.2rem, 13vw, 10rem);
+  line-height: 0.88; letter-spacing: -0.01em;
+}
+.l-hero span:nth-child(2) { font-size: 0.7em; }
+.l-hero em { font-style: normal; color: #26ffcb; }
+
+.l-doodle { position: absolute; z-index: 1; pointer-events: none; animation: l-float 4s ease-in-out infinite; }
+.l-doodle svg { width: 100%; height: auto; display: block; }
+.d-eyes  { width: clamp(60px, 7vw, 100px);  left: 22%; top: 28%;  animation-delay: -1s; }
+.d-burst { width: clamp(70px, 9vw, 130px);  right: 14%; top: 44%; animation-delay: -2s; }
+.d-pad   { width: clamp(110px, 16vw, 230px); left: 3%;  bottom: 14%; transform: rotate(-14deg); }
+.d-dice  { width: clamp(60px, 8vw, 120px);  right: 6%; top: 18%;  animation-delay: -.5s; }
+.d-ghost { width: clamp(70px, 10vw, 150px); left: 30%; bottom: 17%; animation-delay: -3s; }
+.d-coil  { width: clamp(90px, 13vw, 190px); right: 4%; bottom: 8%; animation-delay: -1.5s; }
+@keyframes l-float { 0%, 100% { translate: 0 0; rotate: 0deg; } 50% { translate: 0 -14px; rotate: 4deg; } }
+
+.l-actions {
+  position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%);
+  width: min(90vw, 560px); z-index: 5;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+}
+.l-actions button {
+  padding: 16px 6px; border: 0; border-radius: 4px; background: #fff; color: #0b0b0b;
+  font-family: inherit; font-size: 0.95rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+.l-actions button:hover { background: #26ffcb; transform: translateY(-3px); }
+.l-actions button:focus-visible { outline: 3px solid #ffe600; outline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .l-side { display: none; }
+  .d-eyes { left: 8%; top: 24%; }
+  .d-ghost { left: 36%; bottom: 20%; }
+  .l-actions button { font-size: 0.78rem; padding: 14px 4px; }
+}
+@media (prefers-reduced-motion: reduce) { .l-doodle { animation: none; } }

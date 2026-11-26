@@ -1,0 +1,69 @@
+/* Games list, styled to match the landing screen. Import AFTER Hub.css. */
+.hub-wrap {
+  min-height: 100vh;
+  background: #0b0b0b;
+  font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif;
+}
+.hub { padding-top: 24px; }
+
+/* top bar, same look as the landing nav */
+.hub-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; background: #000; border-radius: 6px;
+}
+.hub-nav .back {
+  border: 0; border-radius: 4px; background: #fff; color: #0b0b0b;
+  padding: 10px 16px; font-family: inherit; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.hub-nav .back:hover { background: #26ffcb; }
+.hub-brand { font-size: 1.25rem; letter-spacing: 0.12em; color: #fff; }
+.hub-brand b { font-weight: 400; color: #26ffcb; }
+
+.hub-title {
+  font-weight: 400; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.9;
+  font-size: clamp(3.4rem, 13vw, 8rem);
+}
+.hub-title span { color: #26ffcb; }
+.hub-sub { color: #fff; font-size: 1.1rem; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* cards */
+.game-card {
+  position: relative; overflow: hidden;
+  background: #151515; border: 3px solid var(--accent); border-radius: 6px;
+  color: #fff; box-shadow: 6px 6px 0 var(--accent);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.game-card:hover {
+  background: var(--accent); color: #0b0b0b; border-color: #0b0b0b;
+  transform: translate(-3px, -3px) rotate(-0.6deg); box-shadow: 9px 9px 0 #fff;
+}
+.game-card:hover .card-icon, .game-card:hover .card-desc, .game-card:hover .card-meta { color: #0b0b0b; }
+.game-card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--accent); }
+
+.card-name { font-weight: 400; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1; }
+.card-desc { color: #cfcfcf; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+.card-meta { font-weight: 400; letter-spacing: 0.1em; }
+
+.game-card.featured {
+  background: #ffe600; color: #0b0b0b; border-color: #0b0b0b;
+  box-shadow: 8px 8px 0 #ff4fa3;
+}
+.game-card.featured .card-icon, .game-card.featured .card-desc, .game-card.featured .card-meta { color: #0b0b0b; }
+.game-card.featured .card-name { font-size: clamp(2.4rem, 7vw, 4rem); }
+.game-card.featured:hover { background: #26ffcb; box-shadow: 11px 11px 0 #ff4fa3; }
+.card-badge {
+  background: #0b0b0b; color: #ffe600; border-radius: 4px; font-weight: 400; font-size: 0.8rem;
+}
+
+/* play together box */
+.hub .together-box {
+  background: #151515; border: 3px solid #26ffcb; border-radius: 6px; box-shadow: 6px 6px 0 #26ffcb; color: #fff;
+}
+.hub .together-box h3 { font-weight: 400; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.hub .btn { border-radius: 4px; font-family: inherit; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+
+@media (max-width: 480px) {
+  .card-name { font-size: 1.25rem; }
+  .game-card { box-shadow: 4px 4px 0 var(--accent); }
+}
+@media (prefers-reduced-motion: reduce) { .game-card:hover { transform: none; } }
