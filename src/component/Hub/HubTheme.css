@@ -67,3 +67,15 @@
   .game-card { box-shadow: 4px 4px 0 var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) { .game-card:hover { transform: none; } }
+
+/* two sections: premium on top, basics below */
+.hub-section { margin-top: 36px; }
+.hub-section-title {
+  margin: 0; font-weight: 400; text-transform: uppercase; letter-spacing: 0.06em;
+  font-size: clamp(1.8rem, 5vw, 2.6rem); color: #fff;
+}
+.hub-section:first-of-type .hub-section-title { color: #26ffcb; }
+.hub-section-sub { margin: 4px 0 18px; color: #bdbdbd; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+.game-card.basic { box-shadow: 4px 4px 0 var(--accent); padding: 16px; }
+.game-card.basic .card-name { font-size: 1.25rem; }
+.game-card.basic svg { width: 40px; height: 40px; }

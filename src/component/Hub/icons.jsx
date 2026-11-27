@@ -64,6 +64,32 @@ export const ShooterIcon = () => (
   </Icon>
 );
 
+export const RacerIcon = () => (
+  <Icon>
+    <path d="M20 56L28 8h8l8 48" />
+    <path d="M32 14v6M32 28v6M32 42v6" strokeWidth="4" />
+  </Icon>
+);
+
+export const BreakerIcon = () => (
+  <Icon>
+    <rect x="8" y="8" width="14" height="8" rx="1" />
+    <rect x="25" y="8" width="14" height="8" rx="1" />
+    <rect x="42" y="8" width="14" height="8" rx="1" />
+    <circle cx="36" cy="38" r="4" fill="currentColor" />
+    <path d="M16 54h32" strokeWidth="5" />
+  </Icon>
+);
+
+export const BlocksIcon = () => (
+  <Icon>
+    <rect x="12" y="10" width="14" height="14" rx="1" />
+    <rect x="26" y="24" width="14" height="14" rx="1" />
+    <rect x="40" y="24" width="14" height="14" rx="1" />
+    <rect x="26" y="38" width="14" height="14" rx="1" />
+  </Icon>
+);
+
 export const ColoringIcon = () => (
   <Icon>
     <path d="M32 8C17 8 8 19 8 31c0 13 10 25 24 25 5 0 6-4 3-7-3-4 0-8 5-8h8c6 0 10-4 10-9C58 18 47 8 32 8z" />

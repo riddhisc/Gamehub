@@ -6,6 +6,7 @@ import ConnectFour from "./component/ConnectFour/ConnectFour";
 import MemoryMatch from "./component/MemoryMatch/MemoryMatch";
 import RockPaperScissors from "./component/RockPaperScissors/RockPaperScissors";
 import SpaceShooter from "./component/SpaceShooter/SpaceShooter";
+import { NeonRush, NeonBreaker, BlockBlitz } from "./component/Arcade/games";
 import ColoringBook from "./component/ColoringBook/ColoringBook";
 import Ludo from "./component/Ludo/Ludo";
 import Sudoku from "./component/Sudoku/Sudoku";
@@ -16,6 +17,9 @@ import {
   MemoryIcon,
   RockPaperScissorsIcon,
   ShooterIcon,
+  RacerIcon,
+  BreakerIcon,
+  BlocksIcon,
   ColoringIcon,
   LudoIcon,
   SudokuIcon,
@@ -25,6 +29,7 @@ import {
 const LIST = [
   {
     id: "temple",
+    tier: "premium",
     featured: true,
     name: "Temple Dash",
     description: "Run through the ancient temple. Dodge, jump, slide and escape the demon!",
@@ -35,6 +40,7 @@ const LIST = [
   },
   {
     id: "tictactoe",
+    tier: "basic",
     online: true,
     name: "Tic Tac Toe",
     description: "Two players, three in a row.",
@@ -45,6 +51,7 @@ const LIST = [
   },
   {
     id: "connect4",
+    tier: "basic",
     online: true,
     name: "Connect Four",
     description: "Drop discs and line up four.",
@@ -55,6 +62,7 @@ const LIST = [
   },
   {
     id: "memory",
+    tier: "basic",
     name: "Memory Match",
     description: "Flip cards and find every pair.",
     players: "1 player",
@@ -64,6 +72,7 @@ const LIST = [
   },
   {
     id: "rps",
+    tier: "basic",
     name: "Rock Paper Scissors",
     description: "Beat the computer, one round at a time.",
     players: "vs computer",
@@ -73,6 +82,7 @@ const LIST = [
   },
   {
     id: "shooter",
+    tier: "premium",
     name: "Star Strike",
     description: "Blast alien waves, beat the bosses and grab upgrades.",
     players: "1 player, arcade",
@@ -81,7 +91,38 @@ const LIST = [
     Component: SpaceShooter,
   },
   {
+    id: "racer",
+    tier: "premium",
+    name: "Neon Rush",
+    description: "Race a night highway. Dodge traffic, boost and beat the clock.",
+    players: "1 player, arcade racing",
+    accent: "#ff4fa3",
+    Icon: RacerIcon,
+    Component: NeonRush,
+  },
+  {
+    id: "breaker",
+    tier: "premium",
+    name: "Neon Breaker",
+    description: "Smash bricks with lasers, fireballs and multi-ball power-ups.",
+    players: "1 player, endless levels",
+    accent: "#26ffcb",
+    Icon: BreakerIcon,
+    Component: NeonBreaker,
+  },
+  {
+    id: "blocks",
+    tier: "premium",
+    name: "Block Blitz",
+    description: "Stack falling blocks, chain combos and race up the levels.",
+    players: "1 player, puzzle",
+    accent: "#b074ff",
+    Icon: BlocksIcon,
+    Component: BlockBlitz,
+  },
+  {
     id: "coloring",
+    tier: "premium",
     online: true,
     name: "Coloring Book",
     description: "Colour by number: fill detailed pictures.",
@@ -92,6 +133,7 @@ const LIST = [
   },
   {
     id: "ludo",
+    tier: "basic",
     online: true,
     name: "Ludo",
     description: "Race your pieces home. Play the computer or a friend.",
@@ -102,6 +144,7 @@ const LIST = [
   },
   {
     id: "sudoku",
+    tier: "basic",
     online: true,
     name: "Sudoku",
     description: "Fill the grid. Solve it alone or together.",

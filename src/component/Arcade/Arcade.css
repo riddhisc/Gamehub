@@ -1,0 +1,7 @@
+.arcade .temple-stage { background: #05030c; }
+.arcade .temple-stage.playing { cursor: none; }
+.arcade .temple-overlay { background: rgba(5, 3, 12, 0.8); }
+.arcade .temple-overlay h2 {
+  color: #26ffcb; font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif;
+  font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; font-size: 2.4rem;
+}

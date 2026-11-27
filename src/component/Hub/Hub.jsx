@@ -10,6 +10,8 @@ let seenLanding = false;
 export default function Hub({ games, onPick }) {
   const [landing, setLanding] = useState(!seenLanding);
   const featured = games.find((g) => g.featured);
+  const premium = games.filter((g) => g.tier !== "basic");
+  const basic = games.filter((g) => g.tier === "basic");
 
   const enter = (after) => {
     seenLanding = true;
@@ -44,22 +46,31 @@ export default function Hub({ games, onPick }) {
         <p className="hub-sub">Pick a game and start playing.</p>
       </header>
 
-      <div className="hub-grid">
-        {games.map(({ id, name, description, players, accent, Icon, featured }) => (
-          <button
-            key={id}
-            className={`game-card ${featured ? "featured" : ""}`}
-            style={{ "--accent": accent }}
-            onClick={() => onPick(id)}
-          >
-            {featured && <span className="card-badge">New · Featured</span>}
-            <Icon />
-            <span className="card-name">{name}</span>
-            <span className="card-desc">{description}</span>
-            <span className="card-meta">{players}</span>
-          </button>
-        ))}
-      </div>
+      {[
+        ["premium", "Premium games", "Full-screen games with levels, bosses and power-ups.", premium],
+        ["basic", "Basic games", "Quick classics for a short break.", basic],
+      ].map(([tier, title, sub, list]) => (
+        <section key={tier} className="hub-section">
+          <h2 className="hub-section-title">{title}</h2>
+          <p className="hub-section-sub">{sub}</p>
+          <div className="hub-grid">
+            {list.map(({ id, name, description, players, accent, Icon, featured }) => (
+              <button
+                key={id}
+                className={`game-card ${featured ? "featured" : ""} ${tier === "basic" ? "basic" : ""}`}
+                style={{ "--accent": accent }}
+                onClick={() => onPick(id)}
+              >
+                {featured && <span className="card-badge">New · Featured</span>}
+                <Icon />
+                <span className="card-name">{name}</span>
+                <span className="card-desc">{description}</span>
+                <span className="card-meta">{players}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      ))}
 
       <PlayTogether games={games} onStart={onPick} />
     </main>
