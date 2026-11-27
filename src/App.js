@@ -3,6 +3,7 @@ import Hub from "./component/Hub/Hub";
 import { GAMES } from "./games";
 import { gameForCode, isValidCode, normaliseCode } from "./net/room";
 import "./App.css";
+import "./GameTheme.css";
 
 // An invite link (?room=PABCD) opens the right game and joins that room.
 function roomFromLink() {
@@ -25,11 +26,19 @@ export default function App() {
 
   const { Component } = active;
   const back = () => setOpen(null);
+  const fullscreen = () => {
+    const el = document.documentElement;
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+  };
   return (
     <div className="app">
       <div className="topbar">
         <button className="back" onClick={back}>
           <span aria-hidden="true">←</span> All games
+        </button>
+        <button className="back fs-btn" onClick={fullscreen}>
+          <span aria-hidden="true">⛶</span> Full screen
         </button>
       </div>
       <Component intent={open.intent} onExit={back} />
