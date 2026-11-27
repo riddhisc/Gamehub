@@ -1,7 +1,7 @@
 /* Games list, styled to match the landing screen. Import AFTER Hub.css. */
 .hub-wrap {
   min-height: 100vh;
-  background: #0b0b0b;
+  background: transparent; /* lets the glow and dot grid from .app show through, like the game screens */
   font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif;
 }
 .hub { padding-top: 24px; }
