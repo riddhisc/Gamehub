@@ -35,7 +35,7 @@ export function key(g, k, down) {
 }
 export function pointer(g, x, y, phase, type) {
   if (phase === "up") { if (type !== "mouse") g.input.n = 0; return; }
-  g.tx = clamp((x / g.w) * 2 - 1, -1, 1) * 1.1;
+  g.tx = clamp((x - g.w / 2) / (0.55 * 0.9 * Math.min(g.w * 0.48, g.h * 0.8)), -1.15, 1.15);
   if (type === "mouse") { if (phase === "down") g.input.n = 1; }
   else g.input.n = y < g.h * 0.45 ? 1 : 0;
 }
@@ -55,8 +55,8 @@ export function update(g, dt) {
 
   const grip = 0.4 + (g.speed / max) * 0.8;
   if (g.input.l || g.input.r) g.x += (g.input.r - g.input.l) * dt * 1.7 * grip;
-  else if (g.tx !== null) g.x += (g.tx - g.x) * Math.min(1, dt * 6);
-  g.x -= curveAt(g.pos + K * 3) * (g.speed / max) * dt * 0.9; // bends push you wide
+  else if (g.tx !== null) g.x += (g.tx - g.x) * Math.min(1, dt * 10);
+  g.x -= curveAt(g.pos + K * 3) * (g.speed / max) * dt * 0.45; // bends push you wide, gently
   g.x = clamp(g.x, -1.6, 1.6);
 
   g.time -= dt;
@@ -122,6 +122,7 @@ export function draw(ctx, g, t) {
   const { w, h } = g;
   const hy = h * HZ;
   const RW = Math.min(w * 0.48, h * 0.8);
+  const camX = g.x * 0.45;
   ctx.save();
   if (g.shake > 0) ctx.translate((Math.random() - 0.5) * 20 * g.shake, (Math.random() - 0.5) * 12 * g.shake);
 
@@ -158,7 +159,7 @@ export function draw(ctx, g, t) {
     const z = g.pos + K / tt;
     const stripe = Math.floor(z / STRIP) % 2;
     const half = tt * RW;
-    const cx = w / 2 + bend * (1 - tt) * (1 - tt) * w * 0.5 - g.x * half;
+    const cx = w / 2 + bend * (1 - tt) * (1 - tt) * w * 0.3 - camX * half;
     ctx.fillStyle = stripe ? "#0f0724" : "#150a30";
     ctx.fillRect(0, y, w, STEP);
     const edge = half * 0.07;
@@ -187,15 +188,16 @@ export function draw(ctx, g, t) {
     if (tt < 0.01) continue;
     const y = hy + tt * (h - hy);
     const half = tt * RW;
-    const cx = w / 2 + bend * (1 - tt) * (1 - tt) * w * 0.5 - g.x * half + car.x * half;
+    const cx = w / 2 + bend * (1 - tt) * (1 - tt) * w * 0.3 - camX * half + car.x * half;
     carSprite(ctx, cx, y, half * 0.3, car.col);
   }
 
   // the player's car
   const py = hy + 0.9 * (h - hy);
   const pw = 0.9 * RW * 0.3;
+  const pcx = w / 2 + bend * 0.01 * w * 0.3 + (g.x - camX) * 0.9 * RW;
   ctx.save();
-  ctx.translate(w / 2, py);
+  ctx.translate(pcx, py);
   ctx.rotate(clamp(((g.input.r - g.input.l) || ((g.tx ?? g.x) - g.x)) * 0.12, -0.15, 0.15));
   if (g.input.n && g.nitro > 0.02) {
     ctx.globalCompositeOperation = "lighter";
@@ -241,6 +243,13 @@ function hud(ctx, g) {
   ctx.fillStyle = "#26ffcb";
   ctx.font = font(16);
   ctx.fillText(`${g.score} PTS`, g.w / 2, 56 * f);
+  const ahead = curveAt(g.pos + 4500);
+  if (Math.abs(ahead) > 0.45) {
+    ctx.textAlign = "center";
+    ctx.fillStyle = `rgba(255,230,0,${Math.min(1, Math.abs(ahead) - 0.2)})`;
+    ctx.font = font(36);
+    ctx.fillText(ahead > 0 ? "CURVE  ▶▶▶" : "◀◀◀  CURVE", g.w / 2, 84 * f);
+  }
   ctx.textAlign = "left";
   ctx.fillStyle = "#ffffff";
   ctx.font = font(44);
