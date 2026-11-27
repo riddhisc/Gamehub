@@ -1,0 +1,8 @@
+.shooter .temple-stage { background: #03040b; cursor: default; }
+.shooter .temple-stage.playing { cursor: none; }
+.shooter .temple-overlay { background: rgba(3, 4, 11, 0.78); }
+.shooter .temple-overlay h2 { color: #26ffcb; font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; font-size: 2.4rem; }
+.pick-grid { display: grid; gap: 10px; width: min(88vw, 420px); }
+.pick-btn { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; border-radius: 4px; }
+.pick-btn b { font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.pick-btn span { font-size: 0.85rem; font-weight: 500; opacity: 0.8; }

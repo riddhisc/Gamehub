@@ -88,3 +88,36 @@
   .ludo-play .status { font-size: 1.2rem; text-align: center; }
   .ludo-play .ludo-dice { justify-content: center; }
 }
+
+/* Snake: neon arcade look, big board on the left, panel on the right */
+.snake-game .title { font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; }
+.snake-game .mode-opt, .snake-game .tab, .snake-game .btn {
+  border-radius: 4px; font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif;
+  font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.snake-game .score { border-radius: 6px; background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(38, 255, 203, 0.25); }
+.snake-game .score-value { font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif; font-weight: 400; letter-spacing: 0.04em; }
+.snake-wrap {
+  border: 2px solid rgba(38, 255, 203, 0.55); border-radius: 6px; background: #04070a;
+  box-shadow: 0 0 36px rgba(38, 255, 203, 0.22), inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+.snake-svg .portal-edge { stroke: #26ffcb; }
+
+@media (min-width: 1000px) and (min-height: 560px) {
+  .app:has(.snake-game) { overflow: hidden; }
+  .app .snake-game {
+    --S: min(calc(100vh - 100px), calc(100vw - 620px));
+    min-height: calc(100vh - 62px); justify-content: center; gap: 14px; max-width: none;
+    padding: 8px 32px 24px calc(var(--S) + 72px);
+  }
+  .snake-game > .snake-wrap { position: fixed; left: 28px; top: 76px; width: var(--S); height: var(--S); z-index: 5; }
+  .snake-game > *:not(.snake-wrap) { order: 6; width: 100%; max-width: 520px; }
+  .snake-game > .title { order: 0; font-size: 3rem; margin: 0; text-align: left; }
+  .snake-game > .scoreboard { order: 1; }
+  .snake-game > .status { order: 2; font-size: 1.15rem; text-align: left; }
+  .snake-game > .actions { order: 3; justify-content: flex-start; }
+  .snake-game > .snake-modes { order: 4; justify-content: flex-start; }
+  .snake-game > .snake-hint { order: 5; text-align: left; margin: 0; }
+  .snake-game > .snake-legend { order: 8; justify-content: flex-start; }
+  .snake-game > .dpad { display: none; }
+}

@@ -5,7 +5,7 @@ import TicTacToe from "./component/TicTacToe/TicTacToe";
 import ConnectFour from "./component/ConnectFour/ConnectFour";
 import MemoryMatch from "./component/MemoryMatch/MemoryMatch";
 import RockPaperScissors from "./component/RockPaperScissors/RockPaperScissors";
-import Snake from "./component/Snake/Snake";
+import SpaceShooter from "./component/SpaceShooter/SpaceShooter";
 import ColoringBook from "./component/ColoringBook/ColoringBook";
 import Ludo from "./component/Ludo/Ludo";
 import Sudoku from "./component/Sudoku/Sudoku";
@@ -15,7 +15,7 @@ import {
   ConnectFourIcon,
   MemoryIcon,
   RockPaperScissorsIcon,
-  SnakeIcon,
+  ShooterIcon,
   ColoringIcon,
   LudoIcon,
   SudokuIcon,
@@ -72,13 +72,13 @@ const LIST = [
     Component: RockPaperScissors,
   },
   {
-    id: "snake",
-    name: "Snake",
-    description: "Three modes, levels, bonus items and rocks.",
-    players: "1 player",
-    accent: "#9cf06b",
-    Icon: SnakeIcon,
-    Component: Snake,
+    id: "shooter",
+    name: "Star Strike",
+    description: "Blast alien waves, beat the bosses and grab upgrades.",
+    players: "1 player, arcade",
+    accent: "#5cc8ff",
+    Icon: ShooterIcon,
+    Component: SpaceShooter,
   },
   {
     id: "coloring",

@@ -57,6 +57,13 @@ export const SnakeIcon = () => (
   </Icon>
 );
 
+export const ShooterIcon = () => (
+  <Icon>
+    <path d="M32 6l9 22 15 20-15-5-4 9H27l-4-9-15 5 15-20z" />
+    <path d="M32 44v8" strokeWidth="5" />
+  </Icon>
+);
+
 export const ColoringIcon = () => (
   <Icon>
     <path d="M32 8C17 8 8 19 8 31c0 13 10 25 24 25 5 0 6-4 3-7-3-4 0-8 5-8h8c6 0 10-4 10-9C58 18 47 8 32 8z" />

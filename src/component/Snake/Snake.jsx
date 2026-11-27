@@ -222,8 +222,8 @@ function Board({ g }) {
         y1={a.y + 0.5}
         x2={b.x + 0.5}
         y2={b.y + 0.5}
-        stroke={`hsl(${160 - t * 40} 85% ${58 - t * 14}%)`}
-        strokeWidth={0.82 - t * 0.2}
+        stroke={`hsl(${172 - t * 30} 100% ${52 - t * 20}%)`}
+        strokeWidth={0.7 - t * 0.28}
         strokeLinecap="round"
       />
     );
@@ -235,61 +235,63 @@ function Board({ g }) {
     <svg className={`snake-svg ${g.slow > 0 ? "slowed" : ""} ${g.alive ? "" : "dead"}`} viewBox={`0 0 ${SIZE} ${SIZE}`} role="img"
       aria-label={`Snake board. Score ${g.score}, level ${g.level}, length ${n}.`}>
       <defs>
-        <pattern id="snake-checker" width="2" height="2" patternUnits="userSpaceOnUse">
-          <rect width="2" height="2" fill="#13242c" />
-          <rect width="1" height="1" fill="#172b34" />
-          <rect x="1" y="1" width="1" height="1" fill="#172b34" />
+        <pattern id="snake-grid" width="1" height="1" patternUnits="userSpaceOnUse">
+          <path d="M1 0H0V1" fill="none" stroke="#7dffe6" strokeOpacity="0.07" strokeWidth="0.03" />
         </pattern>
+        <radialGradient id="snake-bg" cx="50%" cy="50%" r="75%">
+          <stop offset="0" stopColor="#0d1a22" />
+          <stop offset="1" stopColor="#04070a" />
+        </radialGradient>
+        <filter id="snake-glow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="0.14" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
       </defs>
-      <rect width={SIZE} height={SIZE} fill="url(#snake-checker)" />
+      <rect width={SIZE} height={SIZE} fill="url(#snake-bg)" />
+      <rect width={SIZE} height={SIZE} fill="url(#snake-grid)" />
       {g.mode === "portal" && <rect className="portal-edge" x="0.05" y="0.05" width={SIZE - 0.1} height={SIZE - 0.1} fill="none" />}
 
       {g.rocks.map((r, i) => (
         <g key={i}>
-          <rect x={r.x + 0.1} y={r.y + 0.1} width="0.8" height="0.8" rx="0.25" fill="#59707b" />
-          <rect x={r.x + 0.2} y={r.y + 0.18} width="0.45" height="0.22" rx="0.1" fill="#7f97a2" />
+          <rect x={r.x + 0.08} y={r.y + 0.08} width="0.84" height="0.84" rx="0.08" fill="#141d24" stroke="#4b6270" strokeWidth="0.06" />
+          <path d={`M${r.x + 0.28} ${r.y + 0.28}L${r.x + 0.72} ${r.y + 0.72}M${r.x + 0.72} ${r.y + 0.28}L${r.x + 0.28} ${r.y + 0.72}`} stroke="#4b6270" strokeWidth="0.06" strokeLinecap="round" />
         </g>
       ))}
 
       {g.food && (
-        <g>
-          <circle cx={g.food.x + 0.5} cy={g.food.y + 0.56} r="0.34" fill="#ff5d6c" />
-          <path d={`M${g.food.x + 0.5} ${g.food.y + 0.28}q0.05 -0.2 0.25 -0.24`} stroke="#5ed67b" strokeWidth="0.1" fill="none" strokeLinecap="round" />
+        <g filter="url(#snake-glow)">
+          <circle cx={g.food.x + 0.5} cy={g.food.y + 0.5} r="0.44" fill="#ff2d6f" opacity="0.22" />
+          <path d={`M${g.food.x + 0.5} ${g.food.y + 0.14}L${g.food.x + 0.86} ${g.food.y + 0.5}L${g.food.x + 0.5} ${g.food.y + 0.86}L${g.food.x + 0.14} ${g.food.y + 0.5}Z`} fill="#ff2d6f" />
+          <circle cx={g.food.x + 0.5} cy={g.food.y + 0.5} r="0.1" fill="#ffd1e0" />
         </g>
       )}
       {g.gold && !blink(g.gold) && (
-        <g className="gold">
-          <circle cx={g.gold.x + 0.5} cy={g.gold.y + 0.5} r="0.42" fill="#ffd23f" stroke="#fff3b0" strokeWidth="0.08" />
-          <path d={`M${g.gold.x + 0.5} ${g.gold.y + 0.25}l0.07 0.17 0.18 0.01 -0.14 0.11 0.05 0.18 -0.16 -0.1 -0.16 0.1 0.05 -0.18 -0.14 -0.11 0.18 -0.01z`} fill="#b57600" />
+        <g className="gold" filter="url(#snake-glow)">
+          <circle cx={g.gold.x + 0.5} cy={g.gold.y + 0.5} r="0.4" fill="none" stroke="#ffcf3a" strokeWidth="0.1" />
+          <path d={`M${g.gold.x + 0.5} ${g.gold.y + 0.25}l0.07 0.17 0.18 0.01 -0.14 0.11 0.05 0.18 -0.16 -0.1 -0.16 0.1 0.05 -0.18 -0.14 -0.11 0.18 -0.01z`} fill="#ffcf3a" />
         </g>
       )}
       {g.clock && !blink(g.clock) && (
-        <g>
-          <circle cx={g.clock.x + 0.5} cy={g.clock.y + 0.5} r="0.4" fill="#5cc8ff" />
-          <path d={`M${g.clock.x + 0.5} ${g.clock.y + 0.28}V${g.clock.y + 0.5}l0.15 0.1`} stroke="#0f1b21" strokeWidth="0.09" fill="none" strokeLinecap="round" />
+        <g filter="url(#snake-glow)">
+          <circle cx={g.clock.x + 0.5} cy={g.clock.y + 0.5} r="0.4" fill="none" stroke="#5cc8ff" strokeWidth="0.1" />
+          <path d={`M${g.clock.x + 0.5} ${g.clock.y + 0.28}V${g.clock.y + 0.5}l0.15 0.1`} stroke="#5cc8ff" strokeWidth="0.09" fill="none" strokeLinecap="round" />
         </g>
       )}
       {g.shrink && !blink(g.shrink) && (
-        <g>
-          <circle cx={g.shrink.x + 0.5} cy={g.shrink.y + 0.5} r="0.4" fill="#b074ff" />
-          <path d={`M${g.shrink.x + 0.3} ${g.shrink.y + 0.5}h0.4`} stroke="#fff" strokeWidth="0.11" strokeLinecap="round" />
+        <g filter="url(#snake-glow)">
+          <circle cx={g.shrink.x + 0.5} cy={g.shrink.y + 0.5} r="0.4" fill="none" stroke="#b074ff" strokeWidth="0.1" />
+          <path d={`M${g.shrink.x + 0.3} ${g.shrink.y + 0.5}h0.4`} stroke="#b074ff" strokeWidth="0.11" strokeLinecap="round" />
         </g>
       )}
 
-      {segs}
-      {g.snake.length > 1 && (
-        <circle cx={g.snake[n - 1].x + 0.5} cy={g.snake[n - 1].y + 0.5} r={0.82 * 0.5 - 0.1} fill="hsl(120 70% 40%)" opacity="0" />
-      )}
-      <circle cx={hx} cy={hy} r="0.46" fill="#9bffe0" />
-      {[1, -1].map((s) => {
-        const [ex, ey] = eye(s);
-        return (
-          <g key={s}>
-            <circle cx={ex} cy={ey} r="0.11" fill="#fff" />
-            <circle cx={ex + g.dir.x * 0.04} cy={ey + g.dir.y * 0.04} r="0.055" fill="#0f1b21" />
-          </g>
-        );
-      })}
+      <g filter="url(#snake-glow)">
+        {segs}
+        <circle cx={hx} cy={hy} r="0.42" fill="#d9fff7" />
+        {[1, -1].map((s) => {
+          const [ex, ey] = eye(s);
+          return <circle key={s} cx={ex + g.dir.x * 0.05} cy={ey + g.dir.y * 0.05} r="0.065" fill="#04100f" />;
+        })}
+      </g>
     </svg>
   );
 }
@@ -398,7 +400,7 @@ export default function Snake() {
   else if (game.ticks > 0) status = "Paused";
 
   return (
-    <main className="game">
+    <main className="game snake-game">
       <h1 className="title">
         <span>Snake</span>
       </h1>
