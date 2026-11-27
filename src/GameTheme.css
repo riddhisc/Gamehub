@@ -69,3 +69,22 @@
   .coloring > *:not(.canvas) { width: 100%; max-width: 520px; }
   .coloring .progress, .coloring .palette { width: 100%; }
 }
+
+/* Ludo: big board on the left, everything else beside it, no scrolling */
+@media (min-width: 1000px) and (min-height: 560px) {
+  .app:has(.ludo-play) { overflow: hidden; }
+  .app .ludo-play {
+    --S: min(calc(100vh - 100px), calc(100vw - 620px));
+    min-height: calc(100vh - 62px); justify-content: center; gap: 16px; max-width: none;
+    padding: 8px 32px 24px calc(var(--S) + 72px);
+  }
+  .ludo-play > .ludo-board {
+    position: fixed; left: 28px; top: 76px; width: var(--S); height: var(--S);
+    box-shadow: 8px 8px 0 #ff4fa3; z-index: 5;
+  }
+  .ludo-play > *:not(.ludo-board) { width: 100%; max-width: 520px; }
+  .ludo-play .title { font-size: 3rem; margin: 0; }
+  .ludo-play .ludo-players { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .ludo-play .status { font-size: 1.2rem; text-align: center; }
+  .ludo-play .ludo-dice { justify-content: center; }
+}

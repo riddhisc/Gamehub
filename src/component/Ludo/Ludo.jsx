@@ -316,7 +316,7 @@ export default function Ludo({ intent, onExit }) {
   else status = <><strong>{seat.name}</strong> ({label(game.turn)}) is playing…</>;
 
   return (
-    <main className="game">
+    <main className="game ludo-play">
       <h1 className="title">
         Lu<span>do</span>
       </h1>
