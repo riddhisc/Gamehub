@@ -165,17 +165,21 @@ export default function SpaceShooter() {
         <canvas ref={canvasRef} width={dim.w} height={dim.h} className="temple-canvas" role="img" aria-label="Star Strike, a space shooter." />
 
         {phase === "ready" && (
-          <div className="temple-overlay">
-            <h2>Star Strike</h2>
-            <p>Blast through alien waves, take down a boss every fifth wave and grab power-ups. Your ship fires by itself, so just dodge and aim.</p>
-            <ul className="temple-keys">
-              <li><kbd>Mouse</kbd> or finger: move the ship</li>
-              <li><kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> or <kbd>WASD</kbd> move</li>
-              <li><kbd>P</kbd> pause</li>
-            </ul>
-            <Levels value={level} onChange={setLevel} hints={{ easy: "5 lives, slower enemies.", medium: "The standard mission.", hard: "Tough, fast and relentless." }} />
-            <button className="btn btn-primary" onClick={begin}>Launch</button>
-            {best > 0 && <small>Best on {level}: {best}</small>}
+          <div className="temple-overlay menu">
+            <div className="menu-info">
+              <h2>Star Strike</h2>
+              <p>Blast through alien waves, take down a boss every fifth wave and grab power-ups. Your ship fires by itself, so just dodge and aim.</p>
+              <ul className="temple-keys">
+                <li><kbd>Mouse</kbd> or finger: move the ship</li>
+                <li><kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> or <kbd>WASD</kbd> move</li>
+                <li><kbd>P</kbd> pause</li>
+              </ul>
+            </div>
+            <div className="menu-play">
+              <Levels value={level} onChange={setLevel} hints={{ easy: "5 lives, slower enemies.", medium: "The standard mission.", hard: "Tough, fast and relentless." }} />
+              <button className="btn btn-primary" onClick={begin}>Launch</button>
+              {best > 0 && <small>Best on {level}: {best}</small>}
+            </div>
           </div>
         )}
 

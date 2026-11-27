@@ -5,3 +5,24 @@
   color: #26ffcb; font-family: Impact, "Arial Narrow Bold", "Arial Black", sans-serif;
   font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; font-size: 2.4rem;
 }
+
+/* start menu: two wide columns across the whole screen */
+.temple-overlay.menu {
+  flex-direction: row; justify-content: center; align-items: center; gap: 7vw; padding: 0 7vw; text-align: left;
+  background:
+    radial-gradient(circle at 12% 55%, rgba(38, 255, 203, 0.20), transparent 42%),
+    radial-gradient(circle at 92% 25%, rgba(255, 79, 163, 0.22), transparent 38%),
+    rgba(5, 3, 12, 0.74);
+}
+.menu .menu-info { flex: 1.25; max-width: 720px; }
+.menu .menu-info h2 { font-size: clamp(3rem, 8vw, 7rem); line-height: 0.9; margin: 0 0 18px; }
+.menu .menu-info p { font-size: 1.15rem; max-width: 560px; }
+.menu .temple-keys { align-items: flex-start; }
+.menu .menu-play { flex: 1; max-width: 460px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.menu .levels-row { justify-content: flex-start; }
+.menu .btn-primary { padding: 18px 64px; font-size: 1.3rem; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 4px; }
+@media (max-width: 800px) {
+  .temple-overlay.menu { flex-direction: column; text-align: center; gap: 18px; padding: 0 16px; }
+  .menu .menu-play, .menu .temple-keys { align-items: center; }
+  .menu .levels-row { justify-content: center; }
+}

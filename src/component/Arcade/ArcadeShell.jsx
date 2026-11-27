@@ -147,17 +147,21 @@ export default function ArcadeShell({ id, title, blurb, keys, hints, engine, hid
         <canvas ref={canvasRef} width={dim.w} height={dim.h} className="temple-canvas" role="img" aria-label={`${title}, a game.`} />
 
         {phase === "ready" && (
-          <div className="temple-overlay">
-            <h2>{title}</h2>
-            <p>{blurb}</p>
-            <ul className="temple-keys">
-              {keys.map(([k, what]) => (
-                <li key={what}><kbd>{k}</kbd> {what}</li>
-              ))}
-            </ul>
-            <Levels value={level} onChange={setLevel} hints={hints} />
-            <button className="btn btn-primary" onClick={begin}>Play</button>
-            {best > 0 && <small>Best on {level}: {best}</small>}
+          <div className="temple-overlay menu">
+            <div className="menu-info">
+              <h2>{title}</h2>
+              <p>{blurb}</p>
+              <ul className="temple-keys">
+                {keys.map(([k, what]) => (
+                  <li key={what}><kbd>{k}</kbd> {what}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="menu-play">
+              <Levels value={level} onChange={setLevel} hints={hints} />
+              <button className="btn btn-primary" onClick={begin}>Play</button>
+              {best > 0 && <small>Best on {level}: {best}</small>}
+            </div>
           </div>
         )}
         {phase === "paused" && (

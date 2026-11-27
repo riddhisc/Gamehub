@@ -32,7 +32,7 @@ function take(g) {
 export function newGame(level, w, h) {
   const g = {
     w, h, level, t: 0, board: Array.from({ length: ROWS }, () => Array(COLS).fill(0)), bag: [], cur: null, hold: null, canHold: true,
-    score: 0, lines: 0, lv: START[level] || 1, acc: 0, lock: 0, locks: 0, soft: 0, clearing: null, combo: -1, state: "play",
+    bgp: [], score: 0, lines: 0, lv: START[level] || 1, acc: 0, lock: 0, locks: 0, soft: 0, clearing: null, combo: -1, state: "play",
     started: false, banner: { text: "", t: 0 }, pt: null, flash: 0,
   };
   bag(g);
@@ -41,7 +41,7 @@ export function newGame(level, w, h) {
   return g;
 }
 export function resize(g, w, h) { g.w = w; g.h = h; }
-export function idle(g, dt) { g.t += dt; }
+export function idle(g, dt) { g.t += dt; stepBg(g, dt); }
 export const result = (g) => [["Lines", g.lines], ["Level", g.lv]];
 
 function spawn(g, name) {
@@ -164,8 +164,17 @@ function stepDown(g, scored) {
   return false;
 }
 
+function stepBg(g, dt) {
+  while (g.bgp.length < 16) {
+    g.bgp.push({ name: NAMES[Math.floor(Math.random() * 7)], x: Math.random() * g.w, y: g.bgp.length < 8 ? Math.random() * g.h : -140, v: 30 + Math.random() * 60, sz: 0.9 + Math.random() * 1.4, rot: Math.random() * TAU, spin: (Math.random() - 0.5) * 0.4, a: 0.08 + Math.random() * 0.1 });
+  }
+  for (const q of g.bgp) { q.y += q.v * dt; q.rot += q.spin * dt; }
+  g.bgp = g.bgp.filter((q) => q.y < g.h + 180);
+}
+
 export function update(g, dt) {
   g.t += dt;
+  stepBg(g, dt);
   g.flash = Math.max(0, g.flash - dt);
   g.banner.t = Math.max(0, g.banner.t - dt);
   if (g.clearing) { g.clearing.t -= dt; if (g.clearing.t <= 0) finishClear(g); return; }
@@ -224,6 +233,15 @@ export function draw(ctx, g, t) {
   ctx.fillStyle = "rgba(125,255,230,0.05)";
   for (let i = 0; i < 40; i++) ctx.fillRect(((i * 197 + Math.floor(t * 8)) % w), (i * 131) % h, 2, 2);
 
+  for (const q of g.bgp) {
+    const m = SHAPES[q.name], sz = cell * 0.6 * q.sz;
+    ctx.save();
+    ctx.translate(q.x, q.y);
+    ctx.rotate(q.rot);
+    m.forEach((row, r) => row.forEach((v, c) => v && cellDraw(ctx, -(m[0].length * sz) / 2 + c * sz, -(m.length * sz) / 2 + r * sz, sz, COLOR[q.name], q.a)));
+    ctx.restore();
+  }
+
   // board
   ctx.fillStyle = "rgba(0,0,0,0.55)";
   ctx.fillRect(bx - 4, by - 4, COLS * cell + 8, ROWS * cell + 8);
@@ -262,24 +280,44 @@ export function draw(ctx, g, t) {
   if (g.started) {
     const f = Math.max(0.7, cell / 30);
     const font = (px) => `${Math.round(px * f)}px Impact, "Arial Black", sans-serif`;
-    const label = (txt, x, y, al = "center") => { ctx.textAlign = al; ctx.textBaseline = "top"; ctx.fillStyle = "#26ffcb"; ctx.font = font(15); ctx.fillText(txt, x, y); };
-    const holdX = portrait ? bx + cell * 1.6 : bx - cell * 4.2;
-    const nextX = portrait ? bx + COLS * cell - cell * 1.6 : bx + COLS * cell + cell * 4.2;
-    const panelY = portrait ? by - cell * 3.2 : by + cell * 0.2;
-    label("HOLD", holdX, panelY);
-    if (g.hold) miniPiece(ctx, g.hold, holdX, panelY + cell * 2.2, cell * 0.7, g.canHold ? 1 : 0.4);
-    label("NEXT", nextX, panelY);
-    const nxt = g.bag.slice(0, portrait ? 1 : 3);
-    nxt.forEach((n, i) => miniPiece(ctx, n, nextX, panelY + cell * (2.2 + i * 2.4), cell * 0.7));
-    const sx = portrait ? w / 2 : bx - cell * 4.2;
-    const sy = portrait ? by - cell * 3.1 : by + cell * 5.5;
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#fff";
-    ctx.font = font(portrait ? 30 : 34);
-    ctx.fillText(String(g.score), portrait ? w / 2 : sx, sy);
-    label(`LEVEL ${g.lv}`, portrait ? w / 2 : sx, sy + 40 * f);
-    label(`LINES ${g.lines}`, portrait ? w / 2 : sx, sy + 62 * f);
-    if (g.combo > 0) { ctx.fillStyle = "#ffe600"; ctx.font = font(18); ctx.fillText(`COMBO x${g.combo}`, portrait ? w / 2 : sx, sy + 86 * f); }
+    const text = (txt, x, y, col, px, al = "center") => { ctx.textAlign = al; ctx.textBaseline = "top"; ctx.fillStyle = col; ctx.font = font(px); ctx.fillText(txt, x, y); };
+    const card = (x, y, cw, ch) => { ctx.fillStyle = "rgba(0,0,0,0.5)"; ctx.fillRect(x, y, cw, ch); ctx.strokeStyle = "rgba(38,255,203,0.35)"; ctx.lineWidth = 2; ctx.strokeRect(x, y, cw, ch); };
+    const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (portrait) {
+      const holdX = bx + cell * 1.6, nextX = bx + COLS * cell - cell * 1.6, panelY = by - cell * 3.2;
+      text("HOLD", holdX, panelY, "#26ffcb", 15);
+      if (g.hold) miniPiece(ctx, g.hold, holdX, panelY + cell * 2.2, cell * 0.7, g.canHold ? 1 : 0.4);
+      text("NEXT", nextX, panelY, "#26ffcb", 15);
+      miniPiece(ctx, g.bag[0], nextX, panelY + cell * 2.2, cell * 0.7);
+      text(fmt(g.score), w / 2, by - cell * 3.1, "#fff", 30);
+      text(`LEVEL ${g.lv}   LINES ${g.lines}`, w / 2, by - cell * 3.1 + 40 * f, "#26ffcb", 15);
+      if (g.combo > 0) text(`COMBO x${g.combo}`, w / 2, by - cell * 3.1 + 62 * f, "#ffe600", 18);
+    } else {
+      const pad = 18 * f, gap = 28 * f;
+      const pw = clamp(bx - gap - 24 * f, 150, 340 * f);
+      const lx = bx - gap - pw, rx = bx + COLS * cell + gap, bh = ROWS * cell;
+      card(lx, by, pw, bh);
+      card(rx, by, pw, bh);
+      // left: hold and stats
+      text("HOLD", lx + pw / 2, by + pad, "#26ffcb", 17);
+      if (g.hold) miniPiece(ctx, g.hold, lx + pw / 2, by + pad + cell * 2.6, cell * 0.8, g.canHold ? 1 : 0.4);
+      const sy = by + bh * 0.36;
+      text("SCORE", lx + pw / 2, sy, "#26ffcb", 17);
+      text(fmt(g.score), lx + pw / 2, sy + 26 * f, "#fff", 44);
+      text("LEVEL", lx + pad, sy + 100 * f, "#9aa4b2", 17, "left");
+      text(String(g.lv), lx + pw - pad, sy + 94 * f, "#fff", 30, "right");
+      text("LINES", lx + pad, sy + 152 * f, "#9aa4b2", 17, "left");
+      text(String(g.lines), lx + pw - pad, sy + 146 * f, "#fff", 30, "right");
+      if (g.combo > 0) text(`COMBO x${g.combo}`, lx + pw / 2, sy + 204 * f, "#ffe600", 24);
+      // right: next pieces and controls
+      text("NEXT", rx + pw / 2, by + pad, "#26ffcb", 17);
+      g.bag.slice(0, 3).forEach((n, i) => miniPiece(ctx, n, rx + pw / 2, by + pad + cell * (2.6 + i * 3), cell * 0.8));
+      const cy = by + bh * 0.62;
+      [["← →", "MOVE"], ["↑  Z", "ROTATE"], ["↓", "SOFT DROP"], ["SPACE", "SLAM"], ["C", "HOLD"]].forEach(([k, what], i) => {
+        text(k, rx + pad, cy + i * 30 * f, "#26ffcb", 16, "left");
+        text(what, rx + pw - pad, cy + i * 30 * f, "#ffffff", 16, "right");
+      });
+    }
     if (g.banner.t > 0) {
       ctx.globalAlpha = clamp(g.banner.t, 0, 1);
       ctx.textAlign = "center";
