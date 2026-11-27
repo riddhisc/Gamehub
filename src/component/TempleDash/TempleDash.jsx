@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { newRun, step, moveLane, jump, slide, score } from "./runner";
-import { drawFrame, W, H } from "./draw";
+import { drawFrame, W, H, resize } from "./draw";
 import Levels, { useLevel } from "../Levels/Levels";
 import "./TempleDash.css";
 
@@ -28,6 +28,21 @@ export default function TempleDash() {
   useEffect(() => setBest(loadBest(level)), [level]);
   const [result, setResult] = useState(null);
 
+  // the game fills the whole window
+  const [dim, setDim] = useState({ w: W, h: H });
+  useEffect(() => {
+    const fit = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const w = Math.round(window.innerWidth * dpr);
+      const h = Math.round(window.innerHeight * dpr);
+      resize(w, h);
+      setDim({ w, h });
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
   const setPhaseBoth = useCallback((p) => {
     phaseRef.current = p;
     setPhase(p);
@@ -47,6 +62,11 @@ export default function TempleDash() {
     setResult(null);
     setPhaseBoth("running");
   }
+
+  // repaint after the window changes size (resizing clears the canvas)
+  useEffect(() => {
+    paint(performance.now() / 1000);
+  }, [dim, paint]);
 
   // the game loop
   useEffect(() => {
@@ -177,8 +197,8 @@ export default function TempleDash() {
       <div className="temple-stage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <canvas
           ref={canvasRef}
-          width={W}
-          height={H}
+          width={dim.w}
+          height={dim.h}
           className="temple-canvas"
           role="img"
           aria-label={`Temple Dash. Score ${hud.score}, ${hud.coins} coins.`}

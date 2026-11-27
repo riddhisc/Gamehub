@@ -1,10 +1,17 @@
 // Draws a Temple Dash frame on a canvas: a road running into the distance (pseudo-3D),
 // jungle and temple pillars at the sides, the runner, obstacles and coins.
 
-export const W = 420;
-export const H = 630;
-const HORIZON = H * 0.4;
-const F = 300;        // how strongly things shrink with distance
+export let W = 420;
+export let H = 630;
+let HORIZON = H * 0.4;
+let F = 300;          // how strongly things shrink with distance
+// Fit the picture to the whole screen: everything scales with the screen height.
+export function resize(w, h) {
+  W = w;
+  H = h;
+  HORIZON = H * 0.4;
+  F = H * 0.476;
+}
 const CAM_H = 2.2;    // camera height
 const BACK = 3.4;     // the runner is this far in front of the camera
 const FAR = 58;       // how far ahead we draw
@@ -441,10 +448,11 @@ export function drawFrame(ctx, s, t) {
   for (let n = first; n * 4.5 < cam.camZ + FAR; n++) {
     const z = n * 4.5;
     const h1 = hash(n), h2 = hash(n + 91);
-    for (const side of [-1, 1]) {
-      const hh = side < 0 ? h1 : h2;
-      const x = side * (2.5 + hh * 2.2);
-      const kind = hash(n * 3 + side) > 0.72 ? "pillar" : "tree";
+    const bands = W / H > 0.9 ? 3 : 1; // wide screens get more jungle at the sides
+    for (const side of [-1, 1]) for (let band = 0; band < bands; band++) {
+      const hh = band === 0 ? (side < 0 ? h1 : h2) : hash(n * 5 + side * 13 + band * 29);
+      const x = side * (2.5 + band * 2.6 + hh * 2.2);
+      const kind = band === 0 && hash(n * 3 + side) > 0.72 ? "pillar" : "tree";
       things.push({ zr: z - cam.camZ, draw: () => {
         const p = cam.proj(x, 0, z);
         const fade = clamp((FAR - (z - cam.camZ)) / 14, 0, 1);
@@ -480,7 +488,12 @@ export function drawFrame(ctx, s, t) {
   ctx.fillStyle = mist;
   ctx.fillRect(0, HORIZON - 10, W, 80);
 
+  ctx.save();
+  ctx.translate(W / 2, H);
+  ctx.scale(H / 630, H / 630);
+  ctx.translate(-W / 2, -H);
   drawDemon(ctx, s, t);
+  ctx.restore();
 
   // dark corners
   const v = ctx.createRadialGradient(W / 2, H * 0.55, H * 0.35, W / 2, H * 0.55, H * 0.8);

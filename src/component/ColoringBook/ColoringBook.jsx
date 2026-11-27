@@ -250,7 +250,7 @@ export default function ColoringBook({ intent, onExit }) {
     );
 
   return (
-    <main className="game">
+    <main className="game coloring">
       <h1 className="title">
         Coloring <span>Book</span>
       </h1>
