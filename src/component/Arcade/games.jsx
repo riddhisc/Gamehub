@@ -2,6 +2,7 @@ import ArcadeShell from "./ArcadeShell";
 import * as racer from "./racer";
 import * as breaker from "./breaker";
 import * as blocks from "./blocks";
+import * as cyber from "./cyber";
 
 export const NeonRush = () => (
   <ArcadeShell
@@ -34,5 +35,16 @@ export const BlockBlitz = () => (
     blurb="Stack the falling blocks and clear lines. Use hold, plan with the ghost piece and chain combos."
     keys={[["←", "→ move"], ["↑", "rotate · Z other way"], ["↓", "soft drop · Space slam"], ["C", "hold piece"]]}
     hints={{ easy: "Start slow.", medium: "Normal speed.", hard: "Start at level 5." }}
+  />
+);
+
+export const CyberSiege = () => (
+  <ArcadeShell
+    id="cyber"
+    engine={cyber}
+    title="Cyber Siege"
+    blurb="Neon rain, corporate drones and one last district to hold. Dash, shoot and blast your way through the waves, then take down the Warden."
+    keys={[["WASD", "move"], ["Mouse", "aim · hold click to shoot"], ["Space", "dash through bullets"], ["Q", "EMP blast"]]}
+    hints={{ easy: "More health, slower enemies.", medium: "The standard fight.", hard: "Tough, fast and unforgiving." }}
   />
 );

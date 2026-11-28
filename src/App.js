@@ -50,7 +50,7 @@ function Fit({ children }) {
 }
 
 // These two lay themselves out across the whole window instead.
-const OWN_LAYOUT = ["temple", "coloring", "ludo", "snake", "shooter", "racer", "breaker", "blocks"];
+const OWN_LAYOUT = ["temple", "coloring", "ludo", "snake", "shooter", "racer", "breaker", "blocks", "cyber"];
 
 export default function App() {
   const [open, setOpen] = useState(roomFromLink); // { id, intent } or null = show the hub

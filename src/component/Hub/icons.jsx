@@ -90,6 +90,14 @@ export const BlocksIcon = () => (
   </Icon>
 );
 
+export const CyberIcon = () => (
+  <Icon>
+    <circle cx="32" cy="32" r="16" />
+    <path d="M32 8v12M32 44v12M8 32h12M44 32h12" />
+    <circle cx="32" cy="32" r="3" fill="currentColor" />
+  </Icon>
+);
+
 export const ColoringIcon = () => (
   <Icon>
     <path d="M32 8C17 8 8 19 8 31c0 13 10 25 24 25 5 0 6-4 3-7-3-4 0-8 5-8h8c6 0 10-4 10-9C58 18 47 8 32 8z" />

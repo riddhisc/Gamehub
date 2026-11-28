@@ -6,7 +6,7 @@ import ConnectFour from "./component/ConnectFour/ConnectFour";
 import MemoryMatch from "./component/MemoryMatch/MemoryMatch";
 import RockPaperScissors from "./component/RockPaperScissors/RockPaperScissors";
 import SpaceShooter from "./component/SpaceShooter/SpaceShooter";
-import { NeonRush, NeonBreaker, BlockBlitz } from "./component/Arcade/games";
+import { NeonRush, NeonBreaker, BlockBlitz, CyberSiege } from "./component/Arcade/games";
 import ColoringBook from "./component/ColoringBook/ColoringBook";
 import Ludo from "./component/Ludo/Ludo";
 import Sudoku from "./component/Sudoku/Sudoku";
@@ -20,6 +20,7 @@ import {
   RacerIcon,
   BreakerIcon,
   BlocksIcon,
+  CyberIcon,
   ColoringIcon,
   LudoIcon,
   SudokuIcon,
@@ -119,6 +120,16 @@ const LIST = [
     accent: "#b074ff",
     Icon: BlocksIcon,
     Component: BlockBlitz,
+  },
+  {
+    id: "cyber",
+    tier: "premium",
+    name: "Cyber Siege",
+    description: "Cyberpunk twin-stick shooter. Dash, EMP and a boss at the end of every five waves.",
+    players: "1 player, arcade shooter",
+    accent: "#ff2bd6",
+    Icon: CyberIcon,
+    Component: CyberSiege,
   },
   {
     id: "coloring",
